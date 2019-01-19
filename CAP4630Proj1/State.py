@@ -9,13 +9,13 @@ class State(object):
     def StateName(self,state):
         self._StateName = state
 
-    CapitolCity = ""
+    CapitalCity = ""
     @property
-    def CapitolCity(self):
-        return self._CapitolCity
-    @CapitolCity.setter
-    def CapitolCity(self,cap):
-        self._CapitolCity = cap
+    def CapitalCity(self):
+        return self._CapitalCity
+    @CapitalCity.setter
+    def CapitalCity(self,cap):
+        self._CapitalCity = cap
 
     Abbreviation = ""
     @property
@@ -60,9 +60,9 @@ class State(object):
         self._USHouseSeats = inval
 
 
-    def __init__(self,name,capitol,abbr,popul,region,houseseats):
+    def __init__(self,name,Capital,abbr,popul,region,houseseats):
         self.StateName = name
-        self.CapitolCity = capitol
+        self.CapitalCity = Capital
         self.Abbreviation = abbr
         self.Population = popul
         self.PopWithCommas = '{:,}'.format(popul)
@@ -82,7 +82,7 @@ class State(object):
         output = "State Name:        "
         output += self._StateName
         output += "\nCapital City:      "
-        output += self._CapitolCity
+        output += self._CapitalCity
         output += "\nState Abbr:        "
         output += self._Abbreviation
         output += "\nState Population:  "
