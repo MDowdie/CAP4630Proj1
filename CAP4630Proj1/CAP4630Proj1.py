@@ -95,6 +95,7 @@ def QuickSort(list):
 
 #Menu option 3 - Sort list of states by population (using Radix sort)
 def RadixSortStates():
+    #referenced methodology here: https://en.wikipedia.org/wiki/Radix_sort#An_example
     global ListOfStates
     
     def RadixSortStatesAct(ListOfStates, DigitsPlaceToActOn): #digits place here is 1, 10, 100, etc.
@@ -117,13 +118,38 @@ def RadixSortStates():
     global SortState
     SortState = "RadixSort"
 #end RadixSortStates(ListOfStates)
-RadixSortStates()
-PrintStateReport(ListOfStates)
 
 
-#TODO Menu option 4 - Individual state report
-#TODO 4a binary search, if current list order is state name ABC
-#TODO 4b sequential search, if list order is not currently state name ABC
+
+#Menu option 4 - Individual state report
+def GetState(): #returns State object, or string "State Name not found"
+    SearchString = raw_input("Enter state name to search for: ")
+
+
+    global ListOfStates
+    global SortState
+    #TODO 4a binary search, if current list order is state name ABC
+    if(SortState=="QuickSort"):
+        print "QuickSort"
+        leftboundary = 0
+        rightboundary = len(ListOfStates)-1
+
+        while leftboundary <= rightboundary:
+            currentSearchPosition = (leftboundary+rightboundary)/2
+            if ListOfStates[currentSearchPosition].StateName < SearchString:
+                leftboundary = currentSearchPosition+1
+            elif ListOfStates[currentSearchPosition].StateName > SearchString:
+                rightboundary = currentSearchPosition-1
+            else:
+                return ListOfStates[currentSearchPosition]
+        return "State Name not found"
+
+    #TODO 4b sequential search, if list order is not currently state name ABC
+    else:
+        print "Sequential Search"
+        for record in ListOfStates:
+            if record.StateName == SearchString:
+                return record
 
 
 #TODO Menu option 5 - quit
