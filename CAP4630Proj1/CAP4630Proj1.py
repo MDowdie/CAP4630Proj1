@@ -22,7 +22,6 @@ from State import State
 import csv
 import sys
 
-#start of program text and formatting
 print "CAP4640 Project 1\nInstructor: Xudong Liu\nStudent: Matthew Dowdie\n"
 
 #Globals
@@ -198,6 +197,7 @@ def GetState(): #returns State object, or string "State Name not found"
         for record in ListOfStates:
             if record.StateName == SearchString:
                 return record
+        return "Error: State " + SearchString + " not found\n"
 #end GetState()
 
 # Menu loop
