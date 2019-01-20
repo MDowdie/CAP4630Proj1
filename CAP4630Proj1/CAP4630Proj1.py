@@ -15,7 +15,7 @@ with open('States.csv','rb') as csvfile:
     reader = csv.DictReader(csvfile)
     for record in reader:
         ListOfStates.append( State(record["State"],record["Capital"],record["Abbreviation"],int(record["Population"]),record["Region"],int(record["US House Seats"])) )
-print str(len(ListOfStates)) + " States Imported"
+print "There were " + str(len(ListOfStates)) + " state records read."
 
 
 
@@ -59,8 +59,6 @@ def PrintStateReport(ListOfStates):
     sys.stdout.write("\n\n") #design doc quirk again
 #end PrintStateReport(ListOfStates)
 
-
-
 #Menu option 2 - Sort list of states by state name (using Quick sort)
 def QuickSort(list):
     def partition(list,low,high): # referenced pseudocode here: https://en.wikipedia.org/wiki/Quicksort
@@ -92,7 +90,6 @@ def QuickSort(list):
     SortState = "QuickSort"
 #end QuickSort(list)
 
-
 #Menu option 3 - Sort list of states by population (using Radix sort)
 def RadixSortStates():
     #referenced methodology here: https://en.wikipedia.org/wiki/Radix_sort#An_example
@@ -118,8 +115,6 @@ def RadixSortStates():
     global SortState
     SortState = "RadixSort"
 #end RadixSortStates(ListOfStates)
-
-
 
 #Menu option 4 - Individual state report
 def GetState(): #returns State object, or string "State Name not found"
@@ -156,5 +151,28 @@ def GetState(): #returns State object, or string "State Name not found"
 
 
 #TODO Menu loop
+menuText = "1. Print a state report\n"
+menuText += "2. Sort by State name\n"
+menuText += "3. Sort by Population\n"
+menuText += "4. Find and print a given state\n"
+menuText += "5. Quit\n"
+menuText += "Enter your choice: "
+while True:
+    try:
+        userResponse = int(raw_input(menuText))
 
-
+        if userResponse == 1:
+            PrintStateReport(ListOfStates)
+        elif userResponse == 2:
+            QuickSort(ListOfStates)
+        elif userResponse == 3:
+            RadixSortStates()
+        elif userResponse == 4:
+            print GetState()
+        elif userResponse == 5:
+            print "Goodbye!"
+            break
+        else:
+            print "Input not recognized. Please try again!"
+    except ValueError:
+        print "Input not recognized. Please try again!"
