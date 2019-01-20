@@ -6,14 +6,15 @@ import sys
 
 #TODO start of program text and formatting
 
-# States.csv import
+#Globals
 ListOfStates = []
-SortState = "Unsorted"
+SortState = "Unsorted" # as in "the sort state of the list of states"
 
+# States.csv import
 with open('States.csv','rb') as csvfile:
     reader = csv.DictReader(csvfile)
     for record in reader:
-        ListOfStates.append( State(record["State"], record["Capital"], record["Abbreviation"], int(record["Population"]), record["Region"], int(record["US House Seats"])) )
+        ListOfStates.append( State(record["State"],record["Capital"],record["Abbreviation"],int(record["Population"]),record["Region"],int(record["US House Seats"])) )
 print str(len(ListOfStates)) + " States Imported"
 
 
@@ -92,8 +93,33 @@ def QuickSort(list):
 #end QuickSort(list)
 
 
-#TODO Menu option 3 - Sort list of states by population (using Radix sort)
+#Menu option 3 - Sort list of states by population (using Radix sort)
+def RadixSortStates():
+    global ListOfStates
     
+    def RadixSortStatesAct(ListOfStates, DigitsPlaceToActOn): #digits place here is 1, 10, 100, etc.
+        digitsList = [ [], [], [], [], [], [], [], [], [], []] #2d list. first level is 0-9 for digits, second level will be for records found with them
+        intermediaryList = []
+        for record in ListOfStates:
+            digitsList[(record.Population/DigitsPlaceToActOn)%10].append(record)
+
+        for digitPlace in digitsList:
+            for record in digitPlace:
+                intermediaryList.append(record)
+
+        return intermediaryList
+    
+    highestPopulationNumber = max(record.Population for record in ListOfStates)
+    currentDigitsPlace = 1
+    while highestPopulationNumber/currentDigitsPlace > 0:
+        ListOfStates = RadixSortStatesAct(ListOfStates,currentDigitsPlace)   
+        currentDigitsPlace*=10
+    global SortState
+    SortState = "RadixSort"
+#end RadixSortStates(ListOfStates)
+RadixSortStates()
+PrintStateReport(ListOfStates)
+
 
 #TODO Menu option 4 - Individual state report
 #TODO 4a binary search, if current list order is state name ABC
@@ -104,3 +130,5 @@ def QuickSort(list):
 
 
 #TODO Menu loop
+
+
