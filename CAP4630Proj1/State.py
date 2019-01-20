@@ -1,5 +1,11 @@
 class State(object):
-    """description of class"""
+    """
+    An Object class for storing and comparing US states. Properties: name, capital city, state abbreviation, population, region, and number of House of Representative seats. Includes the gamut of operator overrides, such that comparisons reference a state's name.
+    
+    Author: Matthew Dowdie
+    Version: Jan 20, 2019
+    Email: n00721843@ospreys.unf.edu
+    """
 
     StateName = ""
     @property
@@ -60,9 +66,19 @@ class State(object):
         self._USHouseSeats = inval
 
 
-    def __init__(self,name,Capital,abbr,popul,region,houseseats):
+    def __init__(self,name,capital,abbr,popul,region,houseseats):
+        """
+        Initializer method. Instantiates all properties of the class.
+
+        :param name        String   Name of US state.
+        :param capital     String   Name of capital city of US state.
+        :param abbr        String   Official abbreviation of a US state.
+        :param popul       Integer  Population count of a US state.
+        :param region      String   Region of the US where given state is considered to be part of.
+        :param houseseats  Integer  US House of Representatives count for given US state.
+        """
         self.StateName = name
-        self.CapitalCity = Capital
+        self.CapitalCity = capital
         self.Abbreviation = abbr
         self.Population = popul
         self.PopWithCommas = '{:,}'.format(popul)
@@ -71,39 +87,95 @@ class State(object):
 
 
     def __gt__(a,b):
-        """Based on State Names, does a occur before b when placed in alphabetical order?"""
+        """
+        "Greater Than" override. Based on State Names.
+
+        "Does a occur after b when placed in alphabetical order?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName > b.StateName:
             return True
         return False
 
     def __lt__(a,b):
-        """Based on State Names, does a occur before b when placed in alphabetical order?"""
+        """
+        "Less Than" override. Based on State Names.
+
+        "Does a occur before b when placed in alphabetical order?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName < b.StateName:
             return True
         return False
 
     def __le__(a,b):
+        """
+        "Less Than or Equal To" override. Based on State Names.
+
+        "Does a occur before b when placed in alphabetical order, or perhaps ties with b?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName <= b.StateName:
             return True
         return False
 
     def __ge__(a,b):
+        """
+        "Greater Than or Equal To" override. Based on State Names.
+
+        "Does a occur after b when placed in alphabetical order, or perhaps ties with b?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName >= b.StateName:
             return True
         return False
 
     def __eq__(a,b):
+        """
+        "Equal To" override. Based on State Names.
+
+        "Do a and b share the same state name?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName == b.StateName:
             return True
         return False
 
     def __ne__(a,b):
+        """
+        "Not Equal To" override. Based on State Names.
+
+        "Do a and b have different state names?"
+        
+        :param a  State object
+        :param b  State object
+        :return   Boolean
+        """
         if a.StateName != b.StateName:
             return True
         return False
 
     def __str__(self):
-        """Return string representative of entire State object"""
+        """
+        Returns string representation of each property of an instantiated State object.
+
+        :return String. Label and value of each property in order, separated with newlines.
+        """
 
         output = "State Name:        "
         output += self._StateName
