@@ -2,8 +2,14 @@ from State import State
 import csv
 import sys
 
+#TODO start of program docstring
+
+#TODO start of program text and formatting
+
 # States.csv import
 ListOfStates = []
+SortState = "Unsorted"
+
 with open('States.csv','rb') as csvfile:
     reader = csv.DictReader(csvfile)
     for record in reader:
@@ -12,7 +18,7 @@ print str(len(ListOfStates)) + " States Imported"
 
 
 
-#Menu loop
+
 
 #Menu option 1 - Print out a report on all states
 def PrintStateReport(ListOfStates):
@@ -50,18 +56,51 @@ def PrintStateReport(ListOfStates):
         sys.stdout.write(str(record.USHouseSeats).rjust(4).ljust((columns[5][1]))) #the rjust here reflects expected style shown in Project 1 pdf instructions
         sys.stdout.write("\n")
     sys.stdout.write("\n\n") #design doc quirk again
-#end StateReport()
+#end PrintStateReport(ListOfStates)
 
 
 
 #Menu option 2 - Sort list of states by state name (using Quick sort)
+def QuickSort(list):
+    def partition(list,low,high): # referenced pseudocode here: https://en.wikipedia.org/wiki/Quicksort
+        mid = (low + high)/2
+        if list[mid] < list[low]:
+            list[mid],list[low] = list[low],list[mid]
+        if list[high] < list[low]:
+            list[high],list[low] = list[low],list[high]
+        if list[mid] < list[high]:
+            list[mid],list[high] = list[high],list[mid]
+        pivot = list[high]
 
-#Menu option 3 - Sort list of states by population (using Radix sort)
+        i = low-1
+        for j in range(low, high):
+            if list[j]<=pivot:
+                i+=1
+                list[i],list[j] = list[j],list[i]
+        list[i+1],list[high]=list[high],list[i+1]
+        return (i+1)
+
+    def QuickSortAct(list,low,high):
+        if low < high:
+            intermediary = partition(list, low, high)
+            QuickSortAct(list, low, intermediary)
+            QuickSortAct(list, intermediary+1, high)
+
+    QuickSortAct(list,0,len(list)-1)
+    global SortState
+    SortState = "QuickSort"
+#end QuickSort(list)
 
 
-#Menu option 4 - Individual state report
-#4a binary search, if current list order is state name ABC
-#4b sequential search, if list order is not currently state name ABC
+#TODO Menu option 3 - Sort list of states by population (using Radix sort)
+    
+
+#TODO Menu option 4 - Individual state report
+#TODO 4a binary search, if current list order is state name ABC
+#TODO 4b sequential search, if list order is not currently state name ABC
 
 
-#Menu option 5 - quit
+#TODO Menu option 5 - quit
+
+
+#TODO Menu loop

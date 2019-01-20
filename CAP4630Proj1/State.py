@@ -72,7 +72,33 @@ class State(object):
 
     def __gt__(a,b):
         """Based on State Names, does a occur before b when placed in alphabetical order?"""
+        if a.StateName > b.StateName:
+            return True
+        return False
+
+    def __lt__(a,b):
+        """Based on State Names, does a occur before b when placed in alphabetical order?"""
         if a.StateName < b.StateName:
+            return True
+        return False
+
+    def __le__(a,b):
+        if a.StateName <= b.StateName:
+            return True
+        return False
+
+    def __ge__(a,b):
+        if a.StateName >= b.StateName:
+            return True
+        return False
+
+    def __eq__(a,b):
+        if a.StateName == b.StateName:
+            return True
+        return False
+
+    def __ne__(a,b):
+        if a.StateName != b.StateName:
             return True
         return False
 
