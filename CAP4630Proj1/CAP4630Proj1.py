@@ -5,17 +5,18 @@ import sys
 #TODO start of program docstring
 
 #TODO start of program text and formatting
+print "CAP4640 Project 1\nInstructor: Xudong Liu\nStudent: Matthew Dowdie\n"
 
 #Globals
 ListOfStates = []
 SortState = "Unsorted" # as in "the sort state of the list of states"
 
 # States.csv import
-with open('States.csv','rb') as csvfile:
+with open(raw_input("Enter the file name: "),'rb') as csvfile:
     reader = csv.DictReader(csvfile)
     for record in reader:
         ListOfStates.append( State(record["State"],record["Capital"],record["Abbreviation"],int(record["Population"]),record["Region"],int(record["US House Seats"])) )
-print "There were " + str(len(ListOfStates)) + " state records read."
+print "\nThere were " + str(len(ListOfStates)) + " state records read.\n"
 
 
 
@@ -118,14 +119,14 @@ def RadixSortStates():
 
 #Menu option 4 - Individual state report
 def GetState(): #returns State object, or string "State Name not found"
-    SearchString = raw_input("Enter state name to search for: ")
+    SearchString = raw_input("Enter the state name: ")
 
 
     global ListOfStates
     global SortState
     #TODO 4a binary search, if current list order is state name ABC
     if(SortState=="QuickSort"):
-        print "QuickSort"
+        print "Binary search\n"
         leftboundary = 0
         rightboundary = len(ListOfStates)-1
 
@@ -137,42 +138,51 @@ def GetState(): #returns State object, or string "State Name not found"
                 rightboundary = currentSearchPosition-1
             else:
                 return ListOfStates[currentSearchPosition]
-        return "State Name not found"
+        return "Error: State " + SearchString + " not found\n"
 
     #TODO 4b sequential search, if list order is not currently state name ABC
     else:
-        print "Sequential Search"
+        print "Sequential search\n"
         for record in ListOfStates:
             if record.StateName == SearchString:
                 return record
 
+# Menu loop
+def MainMenu():
 
-#TODO Menu option 5 - quit
+    def Prompt(text):
+        try:
+            userResponse = int(raw_input(text))
+            if (userResponse < 1) or (userResponse > 5):
+                return Prompt("Invalid choice enter 1-5: ")
+            else:
+                return userResponse
+        except ValueError:
+            return Prompt("Invalid choice enter 1-5: ")
 
-
-#TODO Menu loop
-menuText = "1. Print a state report\n"
-menuText += "2. Sort by State name\n"
-menuText += "3. Sort by Population\n"
-menuText += "4. Find and print a given state\n"
-menuText += "5. Quit\n"
-menuText += "Enter your choice: "
-while True:
-    try:
-        userResponse = int(raw_input(menuText))
-
+    while True:
+        menuText = "1. Print a state report\n"
+        menuText += "2. Sort by State name\n"
+        menuText += "3. Sort by Population\n"
+        menuText += "4. Find and print a given state\n"
+        menuText += "5. Quit\n"
+        menuText += "Enter your choice: "
+        userResponse = Prompt(menuText)
         if userResponse == 1:
+            print "\n" #expected output style accommodation
             PrintStateReport(ListOfStates)
         elif userResponse == 2:
             QuickSort(ListOfStates)
+            print "\n\nStates sorted by State name.\n"
         elif userResponse == 3:
             RadixSortStates()
+            print "\n\nStates sorted by Population.\n"
         elif userResponse == 4:
+            print ""
             print GetState()
+            print "\n\n"
         elif userResponse == 5:
-            print "Goodbye!"
-            break
-        else:
-            print "Input not recognized. Please try again!"
-    except ValueError:
-        print "Input not recognized. Please try again!"
+            print "\nHave a good day!"
+            break # Menu option 5 - quit
+
+MainMenu()
